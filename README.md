@@ -1,24 +1,3 @@
 # vuesdropdown
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Vuesdropdown is an open source project created by Burhan Kusiaga (http://kusiaga.com/@burhanahmeed)[http://kusiaga.com/@burhanahmeed]. Vuesdropdown is a select dropdown component that unique and different from other existing components.
