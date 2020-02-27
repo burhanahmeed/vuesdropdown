@@ -6,29 +6,18 @@
 	</div>
 	<ul v-if="props.idx == props.active" class="child-span">
     <template v-for="(sub, idx_1) in props.options.subs">
-      <li v-if="checkExclusion(sub.exclude)" :key="idx_1" class="item-child" @click="selectOption(idx_1)">
-         <span :class="{'child-item': true, 'selected': sub.value == props.val}">{{ sub.title }}</span>
-         <div class="warn-box" v-if="sub.warning">
-             <span class="inner-box" :title="sub.warning">
-                 <img style="height: 12px; color: grey" src="../assets/warn.svg" alt="">
-             </span>
-         </div>
-      </li>
-      <li class="item-child" v-else :key="idx_1">
-          <span :class="{'child-item': true}" style="color: grey">{{ sub.title }}</span>
-          <div class="warn-box">
-             <span class="inner-box" style="color: grey; font-size: 12px">
-                 disabled
-             </span>
-         </div>
-      </li>
+      <li-comp :key="idx_1" :props="{'key': idx_1, 'subs': sub, 'activeCategory': props.activeCategory, 'val': props.val}" @selectOption="selectOption"></li-comp>
     </template>
 	</ul>
 </li>	
 </template>
 
 <script>
+    import LiComp from './LiComponent';
 	export default {
+        components: {
+            'li-comp': LiComp
+        },
 		props: ['props'],
 		data () {
 			return {
@@ -40,7 +29,7 @@
 				this.$emit('toggleOpen', key);
 			},
 			selectOption (val) {
-				this.$emit('selectOption', this.props.options.subs[val]);
+				this.$emit('selectOption', val);
             },
             checkExclusion (array) {
                 let arrays = array ? true : false;
@@ -112,54 +101,5 @@ li {
     list-style-type: none;
     max-height: 100%;
 }
-.item-child {
-	display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: space-between;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: space-between;
-    justify-content: space-between;
-    padding: 0 20px 0 60px;
-    cursor: pointer;
-}
-.item-child:hover {
-	background-color: #F5F6F7;
-}
-span .child-item {
-	cursor: pointer;
-    height: 41px;
-    line-height: 41px;
-    color: #433F3E;
-    overflow: hidden;
-    white-space: nowrap;
-    -webkit-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-}
-.selected {
-	font-weight: 700;
-}
-.warn-box {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
-.inner-box {
-    display: -webkit-inline-box;
-    display: -webkit-inline-flex;
-    display: -ms-flexbox;
-    display: inline-flex;
-    position: relative;
-    z-index: 5;
-}
+
 </style>

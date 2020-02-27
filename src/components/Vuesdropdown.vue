@@ -27,11 +27,9 @@
             <template v-if="op.subs">
               <List @selectOption="selectOption" @toggleOpen="toggleOpen" :props="{'val': val,'options': op, 'idx': idx, 'active': activeNow, 'activeCategory': activeCategory }" :key="idx" />
             </template>
-            <!-- <template v-else>
-              <li :key="idx">
-                <div>{{ op.title }}</div>
-              </li>
-            </template> -->
+            <template v-else>
+              <li-comp :key="idx" :props="{'key': idx, 'subs': op, 'activeCategory': activeCategory, 'val': val }" @selectOption="selectOption"></li-comp>
+            </template>
           </template>
         </ul>
       </span>
@@ -41,9 +39,11 @@
 
 <script>
 import List from './ListComponents.vue';
+import LiComp from './LiComponent';
 export default {
   components: {
-    List
+    List,
+    LiComp
   },
   props: ['options', 'placeholder', 'value', 'categories'],
   data () {
@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     setInit () {
+      this.filteredOptions = this.options;
       this.val = this.value.value.value;
       this.selectedCategory = this.value.category;
       for (let i in this.options) {
@@ -117,6 +118,7 @@ export default {
     },
     selectOption (val) {
       this.open = false;
+      this.search = '';
       this.$emit('input', {value: val, category: this.selectedCategory});
     },
     changeCategory (val) {
